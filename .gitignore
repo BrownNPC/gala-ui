@@ -1,0 +1,5 @@
+build
+.wasm
+.dll
+.wat
+*.ts
