@@ -4,6 +4,7 @@ import (
 	"gala/gala"
 	"gala/renderers"
 	"image/color"
+	"math/rand"
 	"net/http"
 
 	// _ "net/http/pprof" // Import the pprof package to register pprof handlers
@@ -38,15 +39,27 @@ func main() {
 					Size(100, 100).
 					Id("sigma").
 					BackgroundColor(rl.Blue).
+					Flex(1).
 					Display_Flex(),
 
 				layout.Box().
 					Size(100, 100).
 					Id("sigma").
 					BackgroundColor(rl.Beige).
+					Flex(1).
 					Display_Flex(),
+				layout.Box().
+					Height(200).
+					Left(20).
+					Right(10).
+					Bottom(100).
+					// Position_Relative().
+					Flex(1).
+					BackgroundColor(rl.Pink).
+					Hovered(func(box *gala.Box) {
+						box.BackgroundColor(color.RGBA{0, uint8(rand.Intn(255)), uint8(rand.Intn(255)), 255})
+					}),
 			)
-
 		layout.End(renderer)
 
 		rl.EndDrawing()

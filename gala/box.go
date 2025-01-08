@@ -18,6 +18,7 @@ type Box struct {
 
 	children []*Box
 
+	onHover func(box *Box)
 	baseStyle
 }
 
@@ -47,19 +48,13 @@ func (b *Box) reset() {
 	b.right = 0
 	b.top = 0
 	b.bottom = 0
-
+	b.alignBits = 0
 	b.Padding(0).
 		Margin(0).
 		Position_Relative().
 		Display_Flex().
 		JustifyContent_FlexStart().
-		AlignItems_Stretch().
-		AlignSelf_Stretch()
-
-	b.display = displayNone
-	b.flexDirection = directionRow
-	b.justifyContent = justifyFlexStart
-	b.backgroundColor = color.RGBA{}
+		AlignItems_Stretch()
 
 }
 
@@ -394,4 +389,15 @@ func (b *Box) Id(i string) *Box {
 func (b *Box) Flex(i int16) *Box {
 	b.flex = i
 	return b
+}
+
+func (b *Box) Hovered(onHover func(box *Box)) *Box {
+	b.onHover = onHover
+	return b
+}
+
+func (b *Box) pointIsInside(x, y int32) bool {
+	return b.x <= int16(x) && b.x+int16(b.width) >= int16(x) &&
+		b.y <= int16(y) && b.y+int16(b.height) >= int16(y)
+
 }

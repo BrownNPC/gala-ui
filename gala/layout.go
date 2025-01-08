@@ -83,6 +83,12 @@ func (l *layout) End(renderer Renderer) {
 	})
 
 	for _, p := range list {
+		if p.onHover != nil {
+			mouseX, mouseY := renderer.MousePos()
+			if p.pointIsInside(mouseX, mouseY) {
+				p.onHover(p)
+			}
+		}
 		renderer.DrawRect(int32(p.x), int32(p.y), int32(p.width), int32(p.height), p.backgroundColor)
 	}
 
